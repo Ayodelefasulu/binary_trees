@@ -19,7 +19,7 @@ binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
 	if (newNode == NULL)
 	{
 		printf("Mem allocation failed\n");
-		return(1);
+		return(NULL);
 	}
 	newNode->n = value;
 	newNode->left = NULL;
