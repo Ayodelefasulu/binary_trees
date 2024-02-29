@@ -22,18 +22,25 @@ size_t binary_tree_height(const binary_tree_t *tree)
 }
 
 /**
- * binary_tree_size - Measures the size of a node in a binary tree
- * @tree: Pointer to the node to measure the depth
+ * binary_tree_is_full - Checks if a binary tree is full
+ * @tree: Pointer to the root node
  *
- * Return: Depth of the node, or 0 if tree is NULL
+ * Return: Number of leaves in the tree
  */
-
-size_t binary_tree_size(const binary_tree_t *tree)
+int binary_tree_is_full(const binary_tree_t *tree)
 {
 	if (tree == NULL)
 		return (0);
 
-	return (1 + binary_tree_size(tree->left) + binary_tree_size(tree->right));
+	/* if a node has no children */
+	if (tree->left == NULL && tree->right == NULL)
+		return (1);
+
+	/* If a node has exactly two children, check its subtrees */
+	if (tree->left != NULL && tree->right != NULL)
+		return (binary_tree_is_full(tree->left) && binary_tree_is_full(tree->right));
+
+	return (0);
 }
 
 /**
@@ -44,17 +51,14 @@ size_t binary_tree_size(const binary_tree_t *tree)
  */
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
-	int height = 0, nodes = 0;
-
 	if (tree == NULL)
-		return (0);
+		return 0;  /* Empty tree is not perfect */
 
-	height = binary_tree_height(tree);
-	nodes = binary_tree_size(tree);
+	if (tree->left == NULL && tree->right == NULL) {
+		return 1;  /* Leaf node is considered perfect */
+	}
 
-	/* Check if number of nodes is a power of 2 */
-	if (1 << height == nodes)
-		return (1);
-
-	return (0);
+	/* Check if both left and right subtrees are full and have the same height */
+	return binary_tree_is_full(tree) &&
+		binary_tree_height(tree->left) == binary_tree_height(tree->right);
 }
