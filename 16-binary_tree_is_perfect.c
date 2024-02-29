@@ -52,13 +52,12 @@ int binary_tree_is_full(const binary_tree_t *tree)
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
 	if (tree == NULL)
-		return 0;  /* Empty tree is not perfect */
+		return (0);  /* Empty tree is not perfect */
 
-	if (tree->left == NULL && tree->right == NULL) {
-		return 1;  /* Leaf node is considered perfect */
-	}
+	if (tree->left == NULL && tree->right == NULL)
+		return (1);  /* Leaf node is considered perfect */
 
 	/* Check if both left and right subtrees are full and have the same height */
-	return binary_tree_is_full(tree) &&
-		binary_tree_height(tree->left) == binary_tree_height(tree->right);
+	return (binary_tree_is_full(tree) &&
+		binary_tree_height(tree->left) == binary_tree_height(tree->right));
 }
